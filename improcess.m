@@ -13,7 +13,7 @@ p = inputParser;
 
 imcond = @(x) ismatrix(x) || (ndims(x) == 3 && size(x,3)==3);
 funcscond = @(x) iscell(x) && numel(x) == numel(args) && isa(x{1},'function_handle') ;
-argscond = @(x) iscell(x) && numel(x) == numel(funcs) ; % 
+argscond = @(x) iscell(x) && numel(x) == numel(funcs) ; %
 % ordercond = @(x) isequal(sort(x), 1:numel(funcs));
 ordercond = @(x) all(ismember(x, 1:numel(funcs)));
 labcond = @(x) iscell(x) && (ischar(x{1}) || isstring(x));
@@ -65,16 +65,15 @@ for i = 1 : numel(funcs)
     end
 end
 
+varargout{1} = temp;
 switch nOutputs
     case 2
-        varargout{1} = temp;
         varargout{2} = ims;
         if shw
             figure;
             makemontage(ims, funcs, labs)
         end
     case 3
-        varargout{1} = temp;
         varargout{2} = ims;
         fig = figure('Visible','off');
         makemontage(ims,funcs);
@@ -86,7 +85,6 @@ switch nOutputs
             close(fig)
         end
     otherwise
-        varargout{1} = temp;
         if shw
             figure; imshow(temp,[]);
         end
